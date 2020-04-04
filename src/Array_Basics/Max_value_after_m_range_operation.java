@@ -1,6 +1,5 @@
 package Array_Basics;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Max_value_after_m_range_operation {

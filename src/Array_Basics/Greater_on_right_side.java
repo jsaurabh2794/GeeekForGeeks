@@ -6,6 +6,7 @@ public class Greater_on_right_side {
 
 	public static void main(String[] args) {
 
+		@SuppressWarnings("resource")
 		Scanner input = new Scanner(System.in);
 		int testCase = input.nextInt();
 		int[] dataArray;
