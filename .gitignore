@@ -1,1 +1,7 @@
 /bin/
+/.idea/vcs.xml
+/.settings
+*.iml
+*.xml
+*.idea
+.gitignore
