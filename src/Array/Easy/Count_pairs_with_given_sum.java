@@ -38,6 +38,7 @@ public class Count_pairs_with_given_sum {
             }else{
                 countOfElement.put(intArrA[i-1], 1);
             }
+            //Before Checking Sum...pushing to HashMap to know count
             int temp = k - intArrA[i];
             if (countOfElement.containsKey(temp)) {
                 count += countOfElement.get(temp);
