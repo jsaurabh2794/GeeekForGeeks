@@ -29,6 +29,8 @@ public class Left_out_candies {
         for (int i = 1; i <= n; i++) {
             if (m >= i) {
                 m = m - i;
+            } else {
+                break;
             }
         }
         return m;
