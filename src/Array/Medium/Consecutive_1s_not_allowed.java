@@ -3,39 +3,35 @@ package Array.Medium;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigInteger;
 import java.util.StringTokenizer;
 
-public class Stock_buy_and_sell {
+public class Consecutive_1s_not_allowed {
+    static final int OUTPUT = 1000000007;
+    static BigInteger[] fib = new BigInteger[101];
+
     public static void main(String[] args) {
         FastReader input = new FastReader();
         int testCase = input.nextInt();
+        BigInteger a = new BigInteger("1");
+        BigInteger b = new BigInteger("1");
+        BigInteger c;
+        for (int i = 1; i <= 100; i++) {
+            c = a.add(b);
+            fib[i] = (c.mod(BigInteger.valueOf(OUTPUT)));
+            a = b;
+            b = c;
+        }
         while (testCase-- > 0) {
             int n = input.nextInt();
-            int[] arr = new int[n];
-            for (int i = 0; i < n; i++) {
-                arr[i] = input.nextInt();
-            }
-            getMaximumProfit(arr, n);
+            getNumberOfStringWhichDoesNotHaveConsecutive1s(n);
             System.out.println();
         }
     }
 
-    //100 180 260 310 40 535 695 , go until you get higher price stock and pick that go till you get lower price and sell there
-    private static void getMaximumProfit(int[] arr, int n) {
-        int l = 0, r = 0;
-        StringBuffer sb = new StringBuffer();
-        for (; r < n; ) {
-            while (r + 1 < n && arr[r] >= arr[r + 1]) {
-                r++;
-            }
-            l = r;
-            while (r + 1 < n && arr[r] <= arr[r + 1]) {
-                r++;
-            }
-            sb.append(l != r ? "(" + (l) + " " + (r) + ") " : "");
-            r++;
-        }
-        System.out.print(sb.length() > 0 ? sb : "No Profit");
+    /*Imp*/
+    private static void getNumberOfStringWhichDoesNotHaveConsecutive1s(int n) {
+        System.out.print(fib[n]);
     }
 
     static class FastReader {
@@ -66,3 +62,4 @@ public class Stock_buy_and_sell {
         }
     }
 }
+

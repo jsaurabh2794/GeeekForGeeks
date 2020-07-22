@@ -3,39 +3,56 @@ package Array.Medium;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
-public class Stock_buy_and_sell {
+public class Minimize_the_heights {
     public static void main(String[] args) {
         FastReader input = new FastReader();
         int testCase = input.nextInt();
         while (testCase-- > 0) {
+            int k = input.nextInt();
             int n = input.nextInt();
-            int[] arr = new int[n];
+            Integer[] arr = new Integer[n];
             for (int i = 0; i < n; i++) {
                 arr[i] = input.nextInt();
             }
-            getMaximumProfit(arr, n);
+            doMinimizeTheHeights(arr, n, k);
             System.out.println();
         }
     }
 
-    //100 180 260 310 40 535 695 , go until you get higher price stock and pick that go till you get lower price and sell there
-    private static void getMaximumProfit(int[] arr, int n) {
-        int l = 0, r = 0;
-        StringBuffer sb = new StringBuffer();
-        for (; r < n; ) {
-            while (r + 1 < n && arr[r] >= arr[r + 1]) {
-                r++;
-            }
-            l = r;
-            while (r + 1 < n && arr[r] <= arr[r + 1]) {
-                r++;
-            }
-            sb.append(l != r ? "(" + (l) + " " + (r) + ") " : "");
-            r++;
+    private static void doMinimizeTheHeights(Integer[] arr, int n, int k) {
+        //First Sort the Data
+        Arrays.sort(arr);
+        //Initialize the Data
+        int big = arr[n - 1] - k;
+        int small = arr[0] + k;
+        // Handle Scenario if small is greater than big
+        if (small > big) {
+            int temp = big;
+            big = small;
+            small = temp;
         }
-        System.out.print(sb.length() > 0 ? sb : "No Profit");
+        int minimumHeight = arr[n - 1] - arr[0];
+
+        // Now do for all elements
+        for (int i = 1; i < n - 1; i++) {
+            int tempSmall = arr[i] - k;
+            int tempBig = arr[i] + k;
+
+            // tempSmall is greater than small ignore, because Can't give Min || tempBig < big, ignore need to pick highest
+            if (tempSmall >= small || big >= tempBig) {
+                continue;
+            }
+
+            if (big - tempSmall <= tempBig - small) {
+                small = tempSmall;
+            } else {
+                big = tempBig;
+            }
+        }
+        System.out.print(Math.min(minimumHeight, big - small));
     }
 
     static class FastReader {

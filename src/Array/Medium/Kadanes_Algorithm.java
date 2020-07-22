@@ -7,6 +7,34 @@ import java.util.StringTokenizer;
 
 /*Imp*/
 public class Kadanes_Algorithm {
+    static class FastReader {
+        BufferedReader input;
+        StringTokenizer st;
+
+        FastReader() {
+            input = new BufferedReader(new InputStreamReader(System.in));
+        }
+
+        Integer nextInt() {
+            return Integer.parseInt(next());
+        }
+
+        Long nextLong() {
+            return Long.parseLong(next());
+        }
+
+        public String next() {
+            while (st == null || !st.hasMoreTokens()) {
+                try {
+                    st = new StringTokenizer(input.readLine().trim());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return st.nextToken();
+        }
+    }
+
     public static void main(String[] args) {
         FastReader input = new FastReader();
         int testCase = input.nextInt();
@@ -37,31 +65,4 @@ public class Kadanes_Algorithm {
         System.out.print(finalMaxSum);
     }
 
-    static class FastReader {
-        BufferedReader input;
-        StringTokenizer st;
-
-        FastReader() {
-            input = new BufferedReader(new InputStreamReader(System.in));
-        }
-
-        Integer nextInt() {
-            return Integer.parseInt(next());
-        }
-
-        Long nextLong() {
-            return Long.parseLong(next());
-        }
-
-        public String next() {
-            while (st == null || !st.hasMoreTokens()) {
-                try {
-                    st = new StringTokenizer(input.readLine().trim());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            return st.nextToken();
-        }
-    }
 }

@@ -5,37 +5,40 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class Stock_buy_and_sell {
-    public static void main(String[] args) {
+public class complement {
+    public static void main(String[] args) throws IOException {
         FastReader input = new FastReader();
         int testCase = input.nextInt();
         while (testCase-- > 0) {
             int n = input.nextInt();
-            int[] arr = new int[n];
-            for (int i = 0; i < n; i++) {
-                arr[i] = input.nextInt();
-            }
-            getMaximumProfit(arr, n);
+            String s = input.input.readLine().trim();
+            getComplement(s.toCharArray(), n);
             System.out.println();
         }
     }
 
-    //100 180 260 310 40 535 695 , go until you get higher price stock and pick that go till you get lower price and sell there
-    private static void getMaximumProfit(int[] arr, int n) {
-        int l = 0, r = 0;
-        StringBuffer sb = new StringBuffer();
-        for (; r < n; ) {
-            while (r + 1 < n && arr[r] >= arr[r + 1]) {
-                r++;
+    private static void getComplement(char[] s, int n) {
+        int l = 0, r = 0, lTemp = 0, maxmCount = Integer.MIN_VALUE, count = 0;
+        for (int i = 0; i < n; i++) {
+            int c = Character.getNumericValue(s[i]);
+            if (c == 0) {
+                count++;
+            } else {
+                count--;
             }
-            l = r;
-            while (r + 1 < n && arr[r] <= arr[r + 1]) {
-                r++;
+            if (count > 0 && count > maxmCount) {
+                maxmCount = count;
+                r = i + 1;
+                l = lTemp + 1;
             }
-            sb.append(l != r ? "(" + (l) + " " + (r) + ") " : "");
-            r++;
+            // if count < 0 update the count to zero
+            if (count < 0) {
+                lTemp = i + 1;
+                count = 0;
+            }
         }
-        System.out.print(sb.length() > 0 ? sb : "No Profit");
+
+        System.out.print((l == 0 && r == 0) ? "-1" : (l) + " " + (r));
     }
 
     static class FastReader {
@@ -50,11 +53,7 @@ public class Stock_buy_and_sell {
             return Integer.parseInt(next());
         }
 
-        Long nextLong() {
-            return Long.parseLong(next());
-        }
-
-        public String next() {
+        private String next() {
             while (st == null || !st.hasMoreTokens()) {
                 try {
                     st = new StringTokenizer(input.readLine().trim());
