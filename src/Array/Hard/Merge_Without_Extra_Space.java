@@ -55,13 +55,13 @@ public class Merge_Without_Extra_Space {
 
     public static int nextGap(int gap) {
         if (gap <= 1) return 0;
-        return (gap / 2);
+        return (gap / 2) + (gap % 2);
     }
 
     /*Pending*/ /*Did not get the solution*/
     private static void doMergeWithoutExtraSpace(int[] arr1, int[] arr2, int n, int m) {
         int i, j, gap = n + m, tmp;
-        for (gap = nextGap(gap); gap > 0; gap = nextGap(gap)) {
+        for (; gap > 0; gap = nextGap(gap)) {
             for (i = 0; i + gap < n; i++) { //Apply Shell Sort in first Array
                 if (arr1[i] > arr1[i + gap]) {
                     tmp = arr1[i];
@@ -70,7 +70,7 @@ public class Merge_Without_Extra_Space {
                 }
             }
 
-            for (j = 0; i < n && j < m; i++, j++) { //Move all element to second array which is greater than second array
+            for (j = 0; i < n && j < m; i++, j++) { //Move all element to second array which is greater than first array
                 if (arr1[i] > arr2[j]) {
                     tmp = arr1[i];
                     arr1[i] = arr2[j];
@@ -88,36 +88,44 @@ public class Merge_Without_Extra_Space {
                 }
             }
         }
+        printData(arr1,arr2);
+    }
+
+
+    //O(mn) Complexity //TLE
+    private static void doMergeWithoutExtraSpaceV3(int[] arr1, int[] arr2, int m, int n) {
+        // Will pick every element from arr1 and check if it is greater than first element of arr2, means it should be in second array
+        // then place that element in correct position
+        for (int i = 0; i < m; i++) {
+            //compare the ith element with first element of Y
+            if (arr1[i] > arr2[0]) {
+                /*Swap element*/
+                int store = arr1[i];
+                arr1[i] = arr2[0];
+                arr2[0] = store;
+                /*Swap element*/
+
+                //Now, place arr2[0] element to correct position
+                int j;
+                for (j = 1; j < n && arr2[j] < store; j++) { //find Correct position
+                    arr2[j - 1] = arr2[j];
+                }
+                arr2[j - 1] = store;
+            }
+        }
+        printData(arr1, arr2);
+    }
+
+    private static void printData(int[] arr1, int[] arr2) {
         StringBuilder sb = new StringBuilder("");
-        for (int t : arr1){
+        for (int t : arr1) {
             sb.append(t + " ");
         }
-        for (int t : arr2){
+        for (int t : arr2) {
             sb.append(t + " ");
         }
         System.out.print(sb);
     }
 
-    private static void doMergeWithoutExtraSpaceV2(int[] arr1, int[] arr2, int m, int n) {
-        for (int i = n - 1; i >= 0; i--) {
-            int last = arr1[m - 1], j;
-            for (j = m - 2; j >= 0 && arr1[j] > arr2[i]; j--) {
-                arr1[j + 1] = arr1[j];
-            }
-            //Now need to swap here
-            if (j != m - 2 || last > arr2[i]) { // Second Last element is less than current element of second array
-                arr1[j + 1] = arr2[i];         //compare with last element
-                arr2[i] = last;
-            }
-        }
-        StringBuilder sb = new StringBuilder("");
-        for (int t : arr1){
-            sb.append(t + " ");
-        }
-        for (int t : arr2){
-            sb.append(t + " ");
-        }
-        System.out.print(sb);
-    }
 
 }
