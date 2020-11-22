@@ -50,6 +50,16 @@ public class Add_Binary_Strings {
     }
 
     private static void doAddBinaryString(String bin1, String bin2) {
+        int i = 0;
+        while(i < bin1.length() && bin1.charAt(i) == '0'){
+            i++;
+        }
+        bin1 = bin1.substring(i);
+        i = 0;
+        while(i < bin2.length() && bin2.charAt(i) == '0'){
+            i++;
+        }
+        bin2 = bin2.substring(i);
         int indexForBin1 = bin1.length() - 1;
         int indexForBin2 = bin2.length() - 1;
         StringBuffer res = new StringBuffer("");
