@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.util.Stack;
 import java.util.StringTokenizer;
 
+/*Imp*/
 public class The_Celebrity_Problem {
     public static void main(String[] args) {
         FastReader input = new FastReader();
@@ -24,7 +25,7 @@ public class The_Celebrity_Problem {
     }
 
     private static int getCeleberityId(int[][] arr, int n) {
-
+        // Stranger is a person who does not know anyone
         Stack<Integer> integers = new Stack<>();
         for (int i = 0; i < n; i++) {
             integers.push(i); // Push all Celebrity's id into stack
@@ -33,16 +34,18 @@ public class The_Celebrity_Problem {
             int firstTop = integers.pop();
             int secondTop = integers.pop();
             if (arr[firstTop][secondTop] == 1) {
-                // means firsttop is not a Stranger celebrity, because he knows SecondTop
+                // means first top is not a Stranger celebrity, because he knows SecondTop
                 integers.push(secondTop);
             } else {
-                // means secondTop is not a Stanger celebrity, because he knows firstTop
+                // first top does not know second top, so he might be Stranger
                 integers.push(firstTop);
             }
         }
         //  where only one person is known to everyone.
         //  Such a person may be present in the party,
         //  if yes, (s)he doesn’t know anyone in the party.
+
+        // if he is the stranger, then he should know everyone but all should know him.
         int lastOne = integers.pop();
         for (int i = 0; i < n; i++) {
             if (i != lastOne && (arr[lastOne][i] == 1 || arr[i][lastOne] == 0)) {

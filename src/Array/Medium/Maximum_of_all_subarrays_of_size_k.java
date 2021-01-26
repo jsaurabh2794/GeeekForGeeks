@@ -3,9 +3,7 @@ package Array.Medium;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.StringTokenizer;
+import java.util.*;
 
 /*Imp*/
 public class Maximum_of_all_subarrays_of_size_k {
@@ -53,6 +51,24 @@ public class Maximum_of_all_subarrays_of_size_k {
         System.out.print(sb);
     }
 
+    static ArrayList <Integer> max_of_subarrays(int arr[], int n, int k)
+    {
+        PriorityQueue<Integer> q = new PriorityQueue<>(Collections.reverseOrder());
+        ArrayList<Integer> s = new ArrayList<>();
+        int c = 0;
+        while (c < k){
+            q.add(arr[c]);
+            c++;
+        }
+        int r = 0;
+        for (int i = k; i< n ; i++){
+            s.add(q.peek());
+            q.remove(arr[r++]);
+            q.add(arr[i]);
+        }
+        s.add(q.peek());
+        return s;
+    }
     static class FastReader {
         BufferedReader input;
         StringTokenizer st;
