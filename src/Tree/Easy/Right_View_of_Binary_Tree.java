@@ -1,6 +1,8 @@
 package Tree.Easy;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Right_View_of_Binary_Tree {
     static class Node {
@@ -25,6 +27,7 @@ public class Right_View_of_Binary_Tree {
         root.left = new Node(3);
         root.left.left = new Node(4);
         System.out.println(rightView(root));
+        getRightViewOfTreeIterative(root);
     }
 
     static ArrayList<Integer> nodesInRightView;
@@ -48,5 +51,32 @@ public class Right_View_of_Binary_Tree {
         }
         getRightViewOfTree(node.right, level + 1);
         getRightViewOfTree(node.left, level + 1);
+    }
+
+    //Iterative
+    private static void getRightViewOfTreeIterative(Node node) {
+        nodesInRightView = new ArrayList<>();
+        if (node == null) {
+            return;
+        }
+        Queue<Node> lvlQueue = new LinkedList<>();
+        lvlQueue.add(node);
+        while (!lvlQueue.isEmpty()) {
+            int noOfnodesatCurrentLevel = lvlQueue.size();
+            while (noOfnodesatCurrentLevel > 0) { // will pick last node at current level as Right View Nodes
+                Node polledNode = lvlQueue.poll();
+                if (noOfnodesatCurrentLevel == 1) { // means last node
+                    nodesInRightView.add(polledNode.data);
+                }
+                if (polledNode.left != null) {
+                    lvlQueue.add(polledNode.left);
+                }
+                if (polledNode.right != null) {
+                    lvlQueue.add(polledNode.right);
+                }
+                noOfnodesatCurrentLevel--;
+            }
+        }
+        System.out.println(nodesInRightView);
     }
 }
